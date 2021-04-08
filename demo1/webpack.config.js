@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-07 21:23:29
- * @LastEditTime: 2021-04-08 21:03:41
+ * @LastEditTime: 2021-04-08 21:45:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \demo1\webpack.config.js
@@ -27,7 +27,18 @@ module.exports = {
       {
         test: /\.scss$/,
         // 执行顺序 从右到左 style-loader 挂载css到html中， css-loader 解析css  sass-loader 解析sass  需要安装 sass-loader node-sass
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoader: 2,
+              modules: true,
+            },
+          },
+          'sass-loader',
+          'postcss-loader',
+        ],
       },
     ],
   },
