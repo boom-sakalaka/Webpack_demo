@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-07 21:23:29
- * @LastEditTime: 2021-04-07 21:33:17
+ * @LastEditTime: 2021-04-08 20:42:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \demo1\webpack.config.js
@@ -10,8 +10,24 @@ const path = require('path');
 
 module.exports = {
   entry: './src/index.js', //入口文件
+  module: {
+    rules: [
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            // 占位符
+            name: '[name]_[hash].[ext]',
+            outputPath: 'images/',
+            limit: 2048,
+          },
+        },
+      },
+    ],
+  },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'bundle'),
+    path: path.resolve(__dirname, 'dist'),
   },
 };
