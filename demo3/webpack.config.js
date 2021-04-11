@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-07 21:23:29
- * @LastEditTime: 2021-04-11 14:10:27
+ * @LastEditTime: 2021-04-11 14:20:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \demo1\webpack.config.js
@@ -11,10 +11,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const clearWebpackPlugin = require('clean-webpack-plugin');
 // plugin （插件） 可以在webpack的某个时候，帮你做一些事情
 module.exports = {
+  mode: 'development',
   entry: {
     main: './src/index.js',
-    sbu: './src/index.js',
   }, //入口文件
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -61,7 +62,6 @@ module.exports = {
     new clearWebpackPlugin(['dist']),
   ],
   output: {
-    publicPath: 'http://cdn.com.cn', // 添加上CDN 地址
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
