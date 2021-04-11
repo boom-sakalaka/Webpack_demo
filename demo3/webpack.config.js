@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-07 21:23:29
- * @LastEditTime: 2021-04-11 14:20:28
+ * @LastEditTime: 2021-04-11 14:28:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \demo1\webpack.config.js
@@ -11,11 +11,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const clearWebpackPlugin = require('clean-webpack-plugin');
 // plugin （插件） 可以在webpack的某个时候，帮你做一些事情
 module.exports = {
-  mode: 'development',
+  mode: 'development', // 开发环境
+  // mode: 'production', // 正式环境
   entry: {
     main: './src/index.js',
   }, //入口文件
-  devtool: 'source-map',
+  devtool: 'cheap-module-eval-source-map', // 开发环境
+  //devtool: 'cheap-module-source-map', // 正式环境
   module: {
     rules: [
       {
