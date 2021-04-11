@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-07 21:23:29
- * @LastEditTime: 2021-04-11 14:28:03
+ * @LastEditTime: 2021-04-11 14:43:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \demo1\webpack.config.js
@@ -18,6 +18,14 @@ module.exports = {
   }, //入口文件
   devtool: 'cheap-module-eval-source-map', // 开发环境
   //devtool: 'cheap-module-source-map', // 正式环境
+  devServer: {
+    port: 8090,
+    contentBase: './dist',
+    open: true,
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
+  },
   module: {
     rules: [
       {
