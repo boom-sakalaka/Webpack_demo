@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-13 11:01:31
- * @LastEditTime: 2021-04-13 20:50:22
+ * @LastEditTime: 2021-04-13 21:26:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Webpack_Demo\demo5\webpack.commone.js
@@ -78,6 +78,27 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks: 'all',
+      minSize: 0,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      automaticNameMaxLength: 30,
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          filename: 'vendors.js',
+        },
+        default: {
+          //minChunks: 2, // 模块被用了多少次才分割
+          priority: -20,
+          reuseExistingChunk: true, // 如果一个模块重复引用，已经被打包，不会重复打包，直接引用打包好的
+          filename: 'common.js',
+        },
+      },
     },
   },
   output: {
