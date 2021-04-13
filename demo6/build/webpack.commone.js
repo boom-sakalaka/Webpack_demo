@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-13 11:01:31
- * @LastEditTime: 2021-04-13 20:34:14
+ * @LastEditTime: 2021-04-13 20:50:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Webpack_Demo\demo5\webpack.commone.js
@@ -75,6 +75,11 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, '../dist'),
