@@ -1,35 +1,19 @@
 /*
  * @Author: your name
- * @Date: 2021-04-07 21:23:29
- * @LastEditTime: 2021-04-13 10:58:33
+ * @Date: 2021-04-13 11:01:31
+ * @LastEditTime: 2021-04-13 11:29:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \demo1\webpack.config.js
+ * @FilePath: \Webpack_Demo\demo5\webpack.commone.js
  */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const clearWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-
-// plugin （插件） 可以在webpack的某个时候，帮你做一些事情
 module.exports = {
-  mode: 'development', // 开发环境
-  //mode: 'production', // 正式环境
   entry: {
     main: './src/index.js',
   }, //入口文件
-  devtool: 'cheap-module-eval-source-map', // 开发环境
-  //devtool: 'cheap-module-source-map', // 正式环境
-  devServer: {
-    port: 8090,
-    contentBase: './dist',
-    open: true,
-    proxy: {
-      '/api': 'http://localhost:3000',
-    },
-    hot: true,
-    //hotOnly: true,
-  },
   module: {
     rules: [
       {
@@ -89,11 +73,8 @@ module.exports = {
     new clearWebpackPlugin(['dist']),
     new webpack.HotModuleReplacementPlugin(),
   ],
-  // optimization: {
-  //   usedExports: true,
-  // }, production 环境自定使用Tree  Shaking
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
   },
 };
