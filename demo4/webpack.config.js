@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-07 21:23:29
- * @LastEditTime: 2021-04-11 17:34:23
+ * @LastEditTime: 2021-04-13 10:41:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \demo1\webpack.config.js
@@ -13,13 +13,13 @@ const webpack = require('webpack');
 
 // plugin （插件） 可以在webpack的某个时候，帮你做一些事情
 module.exports = {
-  mode: 'development', // 开发环境
-  // mode: 'production', // 正式环境
+  //mode: 'development', // 开发环境
+  mode: 'production', // 正式环境
   entry: {
     main: './src/index.js',
   }, //入口文件
-  devtool: 'cheap-module-eval-source-map', // 开发环境
-  //devtool: 'cheap-module-source-map', // 正式环境
+  //devtool: 'cheap-module-eval-source-map', // 开发环境
+  devtool: 'cheap-module-source-map', // 正式环境
   devServer: {
     port: 8090,
     contentBase: './dist',
@@ -89,6 +89,9 @@ module.exports = {
     new clearWebpackPlugin(['dist']),
     new webpack.HotModuleReplacementPlugin(),
   ],
+  // optimization: {
+  //   usedExports: true,
+  // }, production 环境自定使用Tree  Shaking
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
