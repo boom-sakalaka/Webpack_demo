@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-13 11:01:31
- * @LastEditTime: 2021-04-13 21:26:51
+ * @LastEditTime: 2021-05-30 10:50:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Webpack_Demo\demo5\webpack.commone.js
@@ -77,20 +77,20 @@ module.exports = {
   ],
   optimization: {
     splitChunks: {
-      chunks: 'all',
-      minSize: 0,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      automaticNameMaxLength: 30,
+      chunks: 'all', // 同步异步都参与拆分打包
+      minSize: 0, // 引入的包大于多少才开始代码分割 一般使用 30000
+      maxSize: 0, // 最大不做代码分隔
+      minChunks: 1, // 当一个模块被用了多少次才会被打包
+      maxAsyncRequests: 5, // 同时加载最多的库
+      maxInitialRequests: 3, // 首页同时加载的库
+      automaticNameDelimiter: '~', // 间隔符
+      automaticNameMaxLength: 30, // 文件名最长多少
       name: true,
       cacheGroups: {
         vendors: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /[\\/]node_modules[\\/]/, // 这个包是否在node_modules中，属于这个组
           priority: -10,
-          filename: 'vendors.js',
+          filename: 'vendors.js', //所有的代码被打包在这个文件中
         },
         default: {
           //minChunks: 2, // 模块被用了多少次才分割
