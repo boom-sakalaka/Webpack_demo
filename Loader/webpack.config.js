@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-31 22:00:01
- * @LastEditTime: 2021-05-31 22:07:05
+ * @LastEditTime: 2021-05-31 22:09:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \Webpack_demo\Loader\webpack.config.js
@@ -16,7 +16,14 @@ module.exports = {
     rules: [
       {
         test: /\.js/,
-        use: [path.resolve(__dirname, './loaders/replaceLoader.js')],
+        use: [
+          {
+            loader: path.resolve(__dirname, './loaders/replaceLoader.js'),
+            options: {
+              name: 'hahaha',
+            },
+          },
+        ],
       },
     ],
   },
