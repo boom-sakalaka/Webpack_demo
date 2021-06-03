@@ -1,36 +1,33 @@
 /*
  * @Author: your name
  * @Date: 2021-06-01 21:14:22
- * @LastEditTime: 2021-06-01 22:39:59
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-06-03 21:11:48
+ * @LastEditors: your name
  * @Description: In User Settings Edit
  * @FilePath: \Webpack_demo\bundler\bundler.js
  */
-
 const fs = require('fs');
 const path = require('path');
-const paser = require('@babel/parser');
+const parser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
 const babel = require('@babel/core');
 
 const moduleAnalyser = filename => {
   const content = fs.readFileSync(filename, 'utf-8');
-  const ast = paser.parse(content, {
+  const ast = parser.parse(content, {
     sourceType: 'module',
-  }); // 抽象语法树
+  });
   const dependencies = {};
   traverse(ast, {
     ImportDeclaration({ node }) {
       const dirname = path.dirname(filename);
-      const newFilr = path.join(dirname, node.source.value);
-      dependencies[node.source.value] = newFilr;
+      const newFile = './' + path.join(dirname, node.source.value);
+      dependencies[node.source.value] = newFile;
     },
   });
-  // console.log(dependencies);
   const { code } = babel.transformFromAst(ast, null, {
     presets: ['@babel/preset-env'],
   });
-  //  console.log(code);
   return {
     filename,
     dependencies,
@@ -38,5 +35,46 @@ const moduleAnalyser = filename => {
   };
 };
 
-const moduleInfo = moduleAnalyser('./src/index.js');
-console.log(moduleInfo);
+const makeDependenciesGraph = entry => {
+  const entryModule = moduleAnalyser(entry);
+  const graphArray = [entryModule];
+  for (let i = 0; i < graphArray.length; i++) {
+    const item = graphArray[i];
+    const { dependencies } = item;
+    if (dependencies) {
+      for (let j in dependencies) {
+        graphArray.push(moduleAnalyser(dependencies[j]));
+      }
+    }
+  }
+  const graph = {};
+  graphArray.forEach(item => {
+    graph[item.filename] = {
+      dependencies: item.dependencies,
+      code: item.code,
+    };
+  });
+  return graph;
+};
+
+const generateCode = entry => {
+  const graph = JSON.stringify(makeDependenciesGraph(entry));
+  return `
+		(function(graph){
+			function require(module) { 
+				function localRequire(relativePath) {
+					return require(graph[module].dependencies[relativePath]);
+				}
+				var exports = {};
+				(function(require, exports, code){
+					eval(code)
+				})(localRequire, exports, graph[module].code);
+				return exports;
+			};
+			require('${entry}')
+		})(${graph});
+	`;
+};
+
+const code = generateCode('./src/index.js');
+console.log(code);
